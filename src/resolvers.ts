@@ -1,9 +1,10 @@
 import { Pool } from "pg";
 import { User, UserInputType } from "./types/userTypes";
-import { Post } from "./types/postTypes";
+import { Post, PostInputType } from "./types/postTypes";
 import { getUsers, getUserById } from "./queries/users/userQueries";
 import { newUser, removeUser, editUser } from "./queries/users/userMutations";
 import { getPostById, getPosts } from "./queries/posts/postQueries";
+import { newPost } from "./queries/posts/postMutation";
 
 const createResolvers = (pool: Pool) => ({
   Query: {
@@ -28,8 +29,13 @@ const createResolvers = (pool: Pool) => ({
       args: { id: number; edits: Partial<UserInputType> }
     ): Promise<User> => editUser(pool, args.id, args.edits),
 
-    // createPost: async (_: any, args: { user: UserInputType }): Promise<User> =>
-    //   newUser(pool, args.user),
+    createPost: async (_: any, args: { post: PostInputType }): Promise<Post> =>
+      newPost(pool, args.post),
+  },
+  Post: {
+    user(parent: any) {
+      return getUserById(pool, parent.id);
+    },
   },
   // Lägg till relationer med parent här
 });

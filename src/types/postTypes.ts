@@ -9,7 +9,7 @@ export type Post = {
 };
 
 export type PostInputType = {
-  user: User;
+  user_id: number;
   title: string;
   content: string;
   post_date: string;

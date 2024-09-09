@@ -21,8 +21,7 @@ type Mutation {
 createUser(user: UserInput!): User
 deleteUser(id: ID!): [User]
 updateUser(id: ID!, edits: UserUpdate!): User
-
-# createPost(post: PostInput!): Post
+createPost(post: PostInput!): Post
 }
 input UserInput {
 name: String!
@@ -34,9 +33,10 @@ name: String
 email: String
 }
 
-# input PostInput {
-# title: String!
-# date: String!
-# content: String
-# }
+input PostInput {
+user_id: String!
+title: String!
+date: String
+content: String
+}
 `;
